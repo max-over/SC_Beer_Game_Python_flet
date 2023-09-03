@@ -1,6 +1,6 @@
 # SC_Beer_Game_Python_flet
 
-Updated [SC_Beer_Game_Python](https://github.com/max-over/SC_Beer_Game_Python) package. Runs with Flet instead of Remi. Still testing.
+Updated [SC_Beer_Game_Python](https://github.com/max-over/SC_Beer_Game_Python) package. Deployment sequence is the same. Runs with [Flet](https://flet.dev/) instead of [Remi](https://github.com/rawpython/remi). Still testing.
 
 Requirements:
 ```
