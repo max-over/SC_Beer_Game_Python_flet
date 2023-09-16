@@ -31,6 +31,8 @@ def main(page: ft.Page):
     pg.bgcolor = "#e6e6e6"
     pg.window_width = 800
     pg.window_height = 600
+    pg.expand = True
+    pg.scroll = "ALWAYS"
 
     def on_button_adm_disconnect_pressed(e):        
         n.send(pickle.dumps(ProcessData("disconnect", [0], 0)))
@@ -104,14 +106,14 @@ def main(page: ft.Page):
 
     label_adm_period = ft.Text(value="Current Period: ", text_align=ft.TextAlign.LEFT, size=22, weight=ft.FontWeight.BOLD)
     label_adm_turnstatus = ft.Text(value="Turn status: ", text_align=ft.TextAlign.RIGHT, size=22, weight=ft.FontWeight.BOLD)
-    label_adm_status = ft.Text(value="Turn status info: ", text_align=ft.TextAlign.RIGHT, size=12, right=10, top=50)
+    label_adm_status = ft.Text(value="Turn status info: ", text_align=ft.TextAlign.RIGHT, size=12, right=10, top=100)
     label_adm_setperiod = ft.Text(value="Period: ", text_align=ft.TextAlign.LEFT, size=18)
     label_adm_setcustdemand = ft.Text(value="Demand: ", text_align=ft.TextAlign.LEFT, size=18)
     label_adm_leadtime = ft.Text(value="Lead Time: ", text_align=ft.TextAlign.RIGHT, size=14, weight=ft.FontWeight.BOLD)
     label_adm_backlog = ft.Text(value="Backlog: ", text_align=ft.TextAlign.RIGHT, size=14, weight=ft.FontWeight.BOLD)
     label_adm_inventory = ft.Text(value="Inventory: ", text_align=ft.TextAlign.RIGHT, size=14, weight=ft.FontWeight.BOLD)
     label_adm_demand = ft.Text(value="Demand: ", text_align=ft.TextAlign.RIGHT, size=14, weight=ft.FontWeight.BOLD)
-    label_separator = ft.Text(value=" ", text_align=ft.TextAlign.LEFT, size=60, color="#e6e6e6")
+    label_separator = ft.Text(value=" ", text_align=ft.TextAlign.LEFT, size=40, color="#e6e6e6")
     label_adm_pass = ft.Text(value="Password:", text_align=ft.TextAlign.LEFT, size=12)
     label_adm_server = ft.Text(value="Server:", text_align=ft.TextAlign.LEFT, size=12)
     label_adm_port = ft.Text(value="Port:", text_align=ft.TextAlign.LEFT, size=12)
@@ -129,16 +131,16 @@ def main(page: ft.Page):
     button_adm_setperiod = ft.ElevatedButton("Set period and demand", on_click=on_button_adm_set_period_pressed,
                                               style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
                                               bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
-    button_adm_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_adm_disconnect_pressed,
-                                               style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
-                                               bgcolor=DISABLED_COLOR, color="#ffffff",  right=10, top=10, disabled=True)
+    #button_adm_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_adm_disconnect_pressed,
+    #                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
+    #                                           bgcolor=DISABLED_COLOR, color="#ffffff",  right=10, top=10, disabled=True)
     button_adm_update = ft.ElevatedButton("Update all", on_click=on_button_adm_update_pressed, 
                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
-                                          bgcolor=DISABLED_COLOR, color="#ffffff",  right=10, bottom=10, disabled=True)
+                                          bgcolor=DISABLED_COLOR, color="#ffffff",  right=10, top=10, disabled=True)
     button_adm_connect = ft.ElevatedButton("Connect", on_click=on_button_adm_connect_pressed,
                                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
                                            bgcolor=ENABLED_COLOR, color="#ffffff")
-    page.overlay.append(button_adm_disconnect)
+    #page.overlay.append(button_adm_disconnect)
     page.overlay.append(button_adm_update)
     page.overlay.append(label_adm_status)
 
@@ -147,7 +149,7 @@ def main(page: ft.Page):
                 [
                     ft.Container(
                         label_adm_period,
-                        col={"md": 7},
+                        col={"xs": 12,"md": 7},
                     ),
                 ],
             ),
@@ -156,15 +158,15 @@ def main(page: ft.Page):
                 ft.Container(
                     label_adm_setperiod,
                     padding=7,
-                    col={"md": 2},
+                    col={"xs": 12,"md": 2},
                 ),
                 ft.Container(
                     textEditSetPeriod,
-                    col={"md": 1.5},
+                    col={"xs": 5,"md": 1.5},
                 ),
                 ft.Container(
                     label_adm_leadtime,
-                    col={"md": 3.5},
+                    col={"xs": 8,"md": 3.5},
                     padding=10,
                 ),
             ],
@@ -174,15 +176,15 @@ def main(page: ft.Page):
                 ft.Container(
                     label_adm_setcustdemand,
                     padding=7,
-                    col={"md": 2},
+                    col={"xs": 12,"md": 2},
                 ),
                 ft.Container(
                     textEditSetCustDemand,
-                    col={"md": 1.5},
+                    col={"xs": 5,"md": 1.5},
                 ),
                 ft.Container(
                     label_adm_backlog,
-                    col={"md": 3.5},
+                    col={"xs": 8,"md": 3.5},
                     padding=10,
                 ),
             ],
@@ -191,11 +193,11 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     button_adm_setperiod,
-                    col={"md": 3.5},
+                    col={"xs": 5,"md": 3.5},
                 ),
                 ft.Container(
                     label_adm_inventory,
-                    col={"md": 3.5},
+                    col={"xs": 8,"md": 3.5},
                     padding=10,
                 ),
             ],
@@ -205,7 +207,7 @@ def main(page: ft.Page):
 
                 ft.Container(
                     label_adm_demand,
-                    col={"md": 7},
+                    col={"xs": 8,"md": 7},
                     padding=10,
                 ),
             ],
@@ -214,7 +216,7 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_separator,
-                    col={"md": 1},
+                    col={"xs": 0,"md": 1},
                 ),
             ],
         ),
@@ -223,11 +225,11 @@ def main(page: ft.Page):
                 ft.Container(
                     label_adm_pass,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     textEditPassAdm,
-                    col={"md": 3},
+                    col={"xs": 3,"md": 3},
                 ),
             ],
         ),
@@ -236,11 +238,11 @@ def main(page: ft.Page):
                 ft.Container(
                     label_adm_server,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     textEditServerAdm,
-                    col={"md": 3},
+                    col={"xs": 6,"md": 3},
                 ),
             ],
         ),
@@ -249,16 +251,16 @@ def main(page: ft.Page):
                 ft.Container(
                     label_adm_port,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     textEditPortAdm,
-                    col={"md": 1},
+                    col={"xs": 2,"md": 1},
                 ),
                 ft.Container(
                     button_adm_connect,
                     padding=4,
-                    col={"md": 2},
+                    col={"xs": 4,"md": 2},
                 ),
             ],
         ),
@@ -267,7 +269,7 @@ def main(page: ft.Page):
                 ft.Container(
                     label_adm_info,
                     padding=10,
-                    col={"md": 8},
+                    col={"xs": 16,"md": 8},
                 ),
             ],
         ),

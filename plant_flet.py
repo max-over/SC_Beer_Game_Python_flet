@@ -73,6 +73,8 @@ def main(page: ft.Page):
     pg.bgcolor = "#e6e6e6"
     pg.window_width = 800
     pg.window_height = 600
+    pg.expand = True
+    pg.scroll = "ALWAYS"
 
     def on_button_plant_disconnect_pressed(e):
         n.send(pickle.dumps(ProcessData("disconnect", [0], 0)))
@@ -332,19 +334,19 @@ def main(page: ft.Page):
                                                               side=ft.BorderSide(1, ft.colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
 
-    button_plant_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_plant_disconnect_pressed,
-                                              style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                                   side=ft.BorderSide(1, ft.colors.GREY)),
-                                              bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
+    #button_plant_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_plant_disconnect_pressed,
+    #                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
+    #                                                               side=ft.BorderSide(1, ft.colors.GREY)),
+    #                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_plant_update = ft.ElevatedButton("Update", on_click=on_button_plant_update_pressed,
                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
                                                                side=ft.BorderSide(1, ft.colors.GREY)),
-                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, bottom=10, disabled=True)
+                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_plant_connect = ft.ElevatedButton("Connect", on_click=on_button_plant_connect_pressed,
                                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
                                                                 side=ft.BorderSide(1, ft.colors.GREY)),
                                            bgcolor=ENABLED_COLOR, color="#ffffff")
-    page.overlay.append(button_plant_disconnect)
+    #page.overlay.append(button_plant_disconnect)
     page.overlay.append(button_plant_update)
     page.overlay.append(label_plant_status)
 
@@ -353,7 +355,7 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_plant_period,
-                    col={"md": 7},
+                    col={"xs": 12,"md": 7},
                 ),
             ],
         ),
@@ -362,20 +364,20 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_ordersize,
                     padding=7,
-                    col={"md": 2},
+                    col={"xs": 12,"md": 2},
                 ),
                 ft.Container(
                     textEditOrderPlant,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     button_plant_order,
-                    col={"md": 2.25},
+                    col={"xs": 5,"md": 2.25},
                     padding=5,
                 ),
                 ft.Container(
                     label_plant_leadtime,
-                    col={"md": 3.25},
+                    col={"xs": 12,"md": 3.25},
                     padding=10,
                 ),
             ],
@@ -385,20 +387,20 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_prodlot,
                     padding=7,
-                    col={"md": 2},
+                    col={"xs": 12,"md": 2},
                 ),
                 ft.Container(
                     textEditProdlotPlant,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     button_plant_produce,
-                    col={"md": 2.25},
+                    col={"xs": 5,"md": 2.25},
                     padding=5,
                 ),
                 ft.Container(
                     label_plant_backlog,
-                    col={"md": 3.25},
+                    col={"xs": 12,"md": 3.25},
                     padding=10,
                 ),
             ],
@@ -408,20 +410,20 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_shipment,
                     padding=7,
-                    col={"md": 2},
+                    col={"xs": 12,"md": 2},
                 ),
                 ft.Container(
                     textEditShipmentPlant,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     button_plant_shipment,
-                    col={"md": 2.25},
+                    col={"xs": 5,"md": 2.25},
                     padding=5,
                 ),
                 ft.Container(
                     label_plant_inventory_raw,
-                    col={"md": 3.25},
+                    col={"xs": 12,"md": 3.25},
                     padding=10,
                 ),
             ],
@@ -431,11 +433,11 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_costs,
                     padding=7,
-                    col={"md": 3.5},
+                    col={"xs": 6,"md": 3.5},
                 ),
                 ft.Container(
                     label_plant_inventory_finished,
-                    col={"md": 5.5},
+                    col={"xs": 6,"md": 5.5},
                     padding=10,
                 ),
             ],
@@ -444,12 +446,12 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_plant_sl,
-                    col={"md": 3.5},
+                    col={"xs": 6,"md": 3.5},
                     padding=10,
                 ),
                 ft.Container(
                     label_plant_demand,
-                    col={"md": 5.5},
+                    col={"xs": 6,"md": 5.5},
                     padding=10,
                 ),
             ],
@@ -458,7 +460,7 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_plant_structure,
-                    col={"md": 7},
+                    col={"xs": 6,"md": 7},
                     padding=10,
                 ),
             ],
@@ -467,7 +469,7 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_separator,
-                    col={"md": 1},
+                    col={"xs": 12,"md": 1},
                 ),
             ],
         ),
@@ -476,15 +478,15 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_pass,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 4,"md": 1.5},
                 ),
                 ft.Container(
                     textEditPassPlant,
-                    col={"md": 3},
+                    col={"xs": 8,"md": 3},
                 ),
                 ft.Container(
                     label_plant_holding_rate_raw,
-                    col={"md": 7.5},
+                    col={"xs": 12,"md": 7.5},
                     padding=10,
                 ),
             ],
@@ -494,15 +496,15 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_server,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 4,"md": 1.5},
                 ),
                 ft.Container(
                     textEditServerPlant,
-                    col={"md": 3},
+                    col={"xs": 8,"md": 3},
                 ),
                 ft.Container(
                     label_plant_holding_rate_finished,
-                    col={"md": 7.5},
+                    col={"xs": 12,"md": 7.5},
                     padding=10,
                 ),
             ],
@@ -512,20 +514,20 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_port,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 4,"md": 1.5},
                 ),
                 ft.Container(
                     textEditPortPlant,
-                    col={"md": 1},
+                    col={"xs": 8,"md": 1},
                 ),
                 ft.Container(
                     button_plant_connect,
                     padding=4,
-                    col={"md": 2},
+                    col={"xs": 5,"md": 2},
                 ),
                 ft.Container(
                     label_plant_backlog_rate,
-                    col={"md": 7.5},
+                    col={"xs": 12,"md": 7.5},
                     padding=10,
                 ),
             ],
@@ -535,7 +537,7 @@ def main(page: ft.Page):
                 ft.Container(
                     label_plant_info,
                     padding=10,
-                    col={"md": 8},
+                    col={"xs": 12,"md": 8},
                 ),
             ],
         ),

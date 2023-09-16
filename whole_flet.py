@@ -59,6 +59,8 @@ def main(page: ft.Page):
     pg.bgcolor = "#e6e6e6"
     pg.window_width = 800
     pg.window_height = 600
+    pg.expand = True
+    pg.scroll = "ALWAYS"
 
     def on_button_whole_disconnect_pressed(e):
         n.send(pickle.dumps(ProcessData("disconnect", [0], 0)))
@@ -269,19 +271,19 @@ def main(page: ft.Page):
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
                                                               side=ft.BorderSide(1, ft.colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
-    button_whole_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_whole_disconnect_pressed,
-                                              style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                                   side=ft.BorderSide(1, ft.colors.GREY)),
-                                              bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
+    #button_whole_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_whole_disconnect_pressed,
+    #                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
+    #                                                               side=ft.BorderSide(1, ft.colors.GREY)),
+    #                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_whole_update = ft.ElevatedButton("Update", on_click=on_button_whole_update_pressed,
                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
                                                                side=ft.BorderSide(1, ft.colors.GREY)),
-                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, bottom=10, disabled=True)
+                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_whole_connect = ft.ElevatedButton("Connect", on_click=on_button_whole_connect_pressed,
                                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
                                                                 side=ft.BorderSide(1, ft.colors.GREY)),
                                            bgcolor=ENABLED_COLOR, color="#ffffff")
-    page.overlay.append(button_whole_disconnect)
+    #page.overlay.append(button_whole_disconnect)
     page.overlay.append(button_whole_update)
     page.overlay.append(label_whole_status)
 
@@ -290,7 +292,7 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_whole_period,
-                    col={"md": 7},
+                    col={"xs": 12,"md": 7},
                 ),
             ],
         ),
@@ -299,20 +301,20 @@ def main(page: ft.Page):
                 ft.Container(
                     label_whole_ordersize,
                     padding=7,
-                    col={"md": 2},
+                    col={"xs": 12,"md": 2},
                 ),
                 ft.Container(
                     textEditOrderWhole,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     button_whole_order,
-                    col={"md": 2.25},
+                    col={"xs": 5,"md": 2.25},
                     padding=5,
                 ),
                 ft.Container(
                     label_whole_leadtime,
-                    col={"md": 3.25},
+                    col={"xs": 12,"md": 3.25},
                     padding=10,
                 ),
             ],
@@ -322,20 +324,20 @@ def main(page: ft.Page):
                 ft.Container(
                     label_whole_shipment,
                     padding=7,
-                    col={"md": 2},
+                    col={"xs": 12,"md": 2},
                 ),
                 ft.Container(
                     textEditShipmentWhole,
-                    col={"md": 1.5},
+                    col={"xs": 3,"md": 1.5},
                 ),
                 ft.Container(
                     button_whole_shipment,
-                    col={"md": 2.25},
+                    col={"xs": 5,"md": 2.25},
                     padding=5,
                 ),
                 ft.Container(
                     label_whole_backlog,
-                    col={"md": 3.25},
+                    col={"xs": 12,"md": 3.25},
                     padding=10,
                 ),
             ],
@@ -345,11 +347,11 @@ def main(page: ft.Page):
                 ft.Container(
                     label_whole_costs,
                     padding=7,
-                    col={"md": 3.5},
+                    col={"xs": 6,"md": 3.5},
                 ),
                 ft.Container(
                     label_whole_inventory,
-                    col={"md": 5.5},
+                    col={"xs": 6,"md": 5.5},
                     padding=10,
                 ),
             ],
@@ -358,12 +360,12 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_whole_sl,
-                    col={"md": 3.5},
+                    col={"xs": 6,"md": 3.5},
                     padding=10,
                 ),
                 ft.Container(
                     label_whole_demand,
-                    col={"md": 5.5},
+                    col={"xs": 6,"md": 5.5},
                     padding=10,
                 ),
             ],
@@ -372,12 +374,12 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_whole_structure,
-                    col={"md": 7},
+                    col={"xs": 6,"md": 7},
                     padding=10,
                 ),
                 ft.Container(
                     label_whole_holding_rate,
-                    col={"md": 5},
+                    col={"xs": 6,"md": 5},
                     padding=10,
                 ),
             ],
@@ -386,12 +388,12 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_whole_stock_structure,
-                    col={"md": 7},
+                    col={"xs": 6,"md": 7},
                     padding=10,
                 ),
                 ft.Container(
                     label_whole_backlog_rate,
-                    col={"md": 5},
+                    col={"xs": 6,"md": 5},
                     padding=10,
                 ),
             ],
@@ -400,7 +402,7 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     label_separator,
-                    col={"md": 1},
+                    col={"xs": 12,"md": 1},
                 ),
             ],
         ),
@@ -409,11 +411,11 @@ def main(page: ft.Page):
                 ft.Container(
                     label_whole_pass,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 4,"md": 1.5},
                 ),
                 ft.Container(
                     textEditPassWhole,
-                    col={"md": 3},
+                    col={"xs": 8,"md": 3},
                 ),
             ],
         ),
@@ -422,11 +424,11 @@ def main(page: ft.Page):
                 ft.Container(
                     label_whole_server,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 4,"md": 1.5},
                 ),
                 ft.Container(
                     textEditServerWhole,
-                    col={"md": 3},
+                    col={"xs": 8,"md": 3},
                 ),
             ],
         ),
@@ -435,16 +437,16 @@ def main(page: ft.Page):
                 ft.Container(
                     label_whole_port,
                     padding=10,
-                    col={"md": 1.5},
+                    col={"xs": 4,"md": 1.5},
                 ),
                 ft.Container(
                     textEditPortWhole,
-                    col={"md": 1},
+                    col={"xs": 8,"md": 1},
                 ),
                 ft.Container(
                     button_whole_connect,
                     padding=4,
-                    col={"md": 2},
+                    col={"xs": 4,"md": 2},
                 ),
             ],
         ),
@@ -453,7 +455,7 @@ def main(page: ft.Page):
                 ft.Container(
                     label_whole_info,
                     padding=10,
-                    col={"md": 8},
+                    col={"xs": 12,"md": 8},
                 ),
             ],
         ),
