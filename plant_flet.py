@@ -110,9 +110,9 @@ def main(page: ft.Page):
             button_plant_connect.update()
             button_plant_connect.disabled = True
             button_plant_connect.update()
-            button_plant_disconnect.disabled = False
-            button_plant_disconnect.bgcolor = ENABLED_COLOR
-            button_plant_disconnect.update()
+          #  button_plant_disconnect.disabled = False
+          #  button_plant_disconnect.bgcolor = ENABLED_COLOR
+          #  button_plant_disconnect.update()
             button_plant_update.disabled = False
             button_plant_update.bgcolor = ENABLED_COLOR
             button_plant_update.update()
