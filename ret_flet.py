@@ -93,9 +93,9 @@ def main(page: ft.Page):
             button_ret_connect.update()
             button_ret_connect.disabled = True
             button_ret_connect.update()
-            button_ret_disconnect.disabled = False
-            button_ret_disconnect.bgcolor = ENABLED_COLOR
-            button_ret_disconnect.update()
+           # button_ret_disconnect.disabled = False
+           # button_ret_disconnect.bgcolor = ENABLED_COLOR
+           # button_ret_disconnect.update()
             button_ret_update.disabled = False
             button_ret_update.bgcolor = ENABLED_COLOR
             button_ret_update.update()
