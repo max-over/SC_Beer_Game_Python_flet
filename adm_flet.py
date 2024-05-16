@@ -65,10 +65,10 @@ def main(page: ft.Page):
             button_adm_connect.update()
             button_adm_connect.disabled = True
             button_adm_connect.update()
-            button_adm_disconnect.disabled = False
-            button_adm_disconnect.update()
-            button_adm_disconnect.bgcolor = ENABLED_COLOR
-            button_adm_disconnect.update()
+           # button_adm_disconnect.disabled = False
+           # button_adm_disconnect.update()
+           # button_adm_disconnect.bgcolor = ENABLED_COLOR
+           # button_adm_disconnect.update()
             button_adm_setperiod.disabled = False
             button_adm_setperiod.update()
             button_adm_setperiod.bgcolor = ENABLED_COLOR
