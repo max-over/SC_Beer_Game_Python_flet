@@ -97,9 +97,9 @@ def main(page: ft.Page):
             button_distr_connect.update()
             button_distr_connect.disabled = True
             button_distr_connect.update()
-            button_distr_disconnect.disabled = False
-            button_distr_disconnect.bgcolor = ENABLED_COLOR
-            button_distr_disconnect.update()
+          #  button_distr_disconnect.disabled = False
+          #  button_distr_disconnect.bgcolor = ENABLED_COLOR
+          #  button_distr_disconnect.update()
             button_distr_update.disabled = False
             button_distr_update.bgcolor = ENABLED_COLOR
             button_distr_update.update()
