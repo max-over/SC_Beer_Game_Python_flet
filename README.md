@@ -4,7 +4,7 @@ Updated [SC_Beer_Game_Python](https://github.com/max-over/SC_Beer_Game_Python) p
 
 Requirements:
 ```
-flet==0.9.0
+flet==0.25.0.dev3750
 xlwt==1.3.0
 ```
 
