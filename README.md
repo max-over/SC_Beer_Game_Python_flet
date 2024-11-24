@@ -8,7 +8,7 @@ flet==0.25.0.dev3750
 xlwt==1.3.0
 ```
 
-Passphrase for connection is set to "1". Default port for a server is "5556". Game statistics is written in Excel files
+Passphrase for connection is set to "1". Default port for a server is "5556". Game statistics is written to Excel files
 
 Ports (last line in py source files):
 
