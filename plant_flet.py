@@ -71,8 +71,8 @@ def main(page: ft.Page):
     pg = page
     pg.title = "Plant"
     pg.bgcolor = "#e6e6e6"
-    pg.window_width = 800
-    pg.window_height = 600
+    pg.window.width = 800
+    pg.window.height = 600
     pg.expand = True
     pg.scroll = "ALWAYS"
 
@@ -87,6 +87,13 @@ def main(page: ft.Page):
 
     def on_button_plant_connect_pressed(e):
         global n
+        global current_period
+        global inventorycosts
+        global backlogcosts
+        global backlogtotal
+        global costs
+        global inventory_raw
+        global inventory_finished
         password = textEditPassPlant.value
         server = textEditServerPlant.value
         port = int(textEditPortPlant.value)
@@ -104,6 +111,14 @@ def main(page: ft.Page):
                 label_plant_info.value = f"Plant connected to: {server}_{port}"
                 label_plant_info.visible = True
                 label_plant_info.update()
+                current_period = n.send(pickle.dumps(ProcessData("get_plant_lastperiod", [0], current_period)))
+                inventorycosts = n.send(pickle.dumps(ProcessData("get_plant_inventorycosts", [0], 0)))
+                backlogcosts = n.send(pickle.dumps(ProcessData("get_plant_backlogcosts", [0], 0)))
+                backlogtotal = n.send(pickle.dumps(ProcessData("get_plant_backlogtotal", [0], 0)))
+                costs = n.send(pickle.dumps(ProcessData("get_plant_costs", [0], 0)))
+                if current_period > 0:
+                    inventory_raw = n.send(pickle.dumps(ProcessData("get_plant_inventory_raw", [0], 0)))
+                    inventory_finished = n.send(pickle.dumps(ProcessData("get_plant_inventory_finished", [0], 0)))
             except:
                 run = False
             button_plant_connect.bgcolor = DISABLED_COLOR
@@ -127,11 +142,10 @@ def main(page: ft.Page):
         try:
             prodlot = int(textEditProdlotPlant.value)
             prodlot = min(prodlot, int(inventory_raw) if prodlot >= 0 else 0)
-            n.send(pickle.dumps(ProcessData("plant_prodlot", [0], prodlot)))
+            n.send(pickle.dumps(ProcessData("plant_prodlot",  prodlot, current_period + productiontime)))
             inventory_raw -= prodlot
             label_plant_inventory_raw.value = f"Inventory raw: {inventory_raw}"
             label_plant_inventory_raw.update()
-            production_plant_queue.append([prodlot, current_period + productiontime])
             button_plant_produce.bgcolor = DISABLED_COLOR
             button_plant_produce.update()
             button_plant_produce.disabled = True
@@ -261,21 +275,27 @@ def main(page: ft.Page):
 
     def on_button_plant_order_pressed(e):
         try:
-            prod_order = int(textEditOrderPlant.value)
-            if prod_order >= 0:
-                n.send(pickle.dumps(ProcessData("plant_order", [0], prod_order)))
-                shipment_plant_queue.append((prod_order, current_period))
-                sheet_plant.write(int(current_period), 2, int(prod_order))
+            prodorder = int(textEditOrderPlant.value)
+            if prodorder >= 0:
+                n.send(pickle.dumps(ProcessData("plant_order", prodorder, current_period + leadtimeup)))
+                n.send(pickle.dumps(ProcessData("upd_plant_inventorycosts", [0], inventorycosts)))
+                n.send(pickle.dumps(ProcessData("upd_plant_backlogcosts", [0], backlogcosts)))
+                n.send(pickle.dumps(ProcessData("upd_plant_costs", [0], costs)))
+                n.send(pickle.dumps(ProcessData("upd_plant_lastperiod", [0], current_period)))
+                n.send(pickle.dumps(ProcessData("upd_plant_backlogtotal", [0], backlogtotal)))
+                n.send(pickle.dumps(ProcessData("upd_plant_inventory_raw", [0], inventory_raw)))
+                n.send(pickle.dumps(ProcessData("upd_plant_inventory_finished", [0], inventory_finished)))
+                sheet_plant.write(int(current_period), 2, int(prodorder))
                 wb.save(f"plant_stat{textEditPortPlant.value}_{xtime}.xls")
                 button_plant_order.bgcolor = DISABLED_COLOR
                 button_plant_order.update()
                 button_plant_order.disabled = True
                 button_plant_order.update()
             else:
-                prod_order = 0
+                prodorder = 0
         except ValueError:
-            prod_order = 0
-        textEditOrderPlant.value = str(prod_order)
+            prodorder = 0
+        textEditOrderPlant.value = str(prodorder)
 
     label_plant_period = ft.Text(value="Current Period: 0", text_align=ft.TextAlign.LEFT, size=22,
                                weight=ft.FontWeight.BOLD)
@@ -310,41 +330,41 @@ def main(page: ft.Page):
     label_plant_port = ft.Text(value="Port:", text_align=ft.TextAlign.LEFT, size=12)
     label_plant_info = ft.Text(value="Info", text_align=ft.TextAlign.LEFT, size=12)
     textEditOrderPlant = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                         height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                         height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditProdlotPlant = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                      height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                      height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditShipmentPlant = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                         height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                         height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditPassPlant = ft.TextField(value="passphrase", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditServerPlant = ft.TextField(value="localhost", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                     height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                     height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditPortPlant = ft.TextField(value="5556", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     button_plant_order = ft.ElevatedButton("Order", on_click=on_button_plant_order_pressed,
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                              side=ft.BorderSide(1, ft.colors.GREY)),
+                                                              side=ft.BorderSide(1, ft.Colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
     button_plant_produce = ft.ElevatedButton("Produce", on_click=on_button_plant_produce_pressed,
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                              side=ft.BorderSide(1, ft.colors.GREY)),
+                                                              side=ft.BorderSide(1, ft.Colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
     button_plant_shipment = ft.ElevatedButton("Shipment", on_click=on_button_plant_shipment_pressed,
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                              side=ft.BorderSide(1, ft.colors.GREY)),
+                                                              side=ft.BorderSide(1, ft.Colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
 
     #button_plant_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_plant_disconnect_pressed,
     #                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-    #                                                               side=ft.BorderSide(1, ft.colors.GREY)),
+    #                                                               side=ft.BorderSide(1, ft.Colors.GREY)),
     #                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_plant_update = ft.ElevatedButton("Update", on_click=on_button_plant_update_pressed,
                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                               side=ft.BorderSide(1, ft.colors.GREY)),
+                                                               side=ft.BorderSide(1, ft.Colors.GREY)),
                                           bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_plant_connect = ft.ElevatedButton("Connect", on_click=on_button_plant_connect_pressed,
                                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                                side=ft.BorderSide(1, ft.colors.GREY)),
+                                                                side=ft.BorderSide(1, ft.Colors.GREY)),
                                            bgcolor=ENABLED_COLOR, color="#ffffff")
     #page.overlay.append(button_plant_disconnect)
     page.overlay.append(button_plant_update)

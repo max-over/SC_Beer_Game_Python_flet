@@ -57,8 +57,8 @@ def main(page: ft.Page):
     pg = page
     pg.title = "Distributor"
     pg.bgcolor = "#e6e6e6"
-    pg.window_width = 800
-    pg.window_height = 600
+    pg.window.width = 800
+    pg.window.height = 600
     pg.expand = True
     pg.scroll = "ALWAYS"
 
@@ -74,6 +74,12 @@ def main(page: ft.Page):
 
     def on_button_distr_connect_pressed(e):
         global n
+        global current_period
+        global inventorycosts
+        global backlogcosts
+        global backlogtotal
+        global costs
+        global inventory
         password = textEditPassDistr.value
         server = textEditServerDistr.value
         port = int(textEditPortDistr.value)
@@ -91,6 +97,13 @@ def main(page: ft.Page):
                 label_distr_info.value = f"Distributor connected to: {server}_{port}"
                 label_distr_info.visible = True
                 label_distr_info.update()
+                current_period = n.send(pickle.dumps(ProcessData("get_distr_lastperiod", [0], current_period)))
+                inventorycosts = n.send(pickle.dumps(ProcessData("get_distr_inventorycosts", [0], 0)))
+                backlogcosts = n.send(pickle.dumps(ProcessData("get_distr_backlogcosts", [0], 0)))
+                backlogtotal = n.send(pickle.dumps(ProcessData("get_distr_backlogtotal", [0], 0)))
+                costs = n.send(pickle.dumps(ProcessData("get_distr_costs", [0], 0)))
+                if current_period > 0:
+                    inventory = n.send(pickle.dumps(ProcessData("get_distr_inventory", [0], 0)))
             except:
                 run = False
             button_distr_connect.bgcolor = DISABLED_COLOR
@@ -214,6 +227,12 @@ def main(page: ft.Page):
             distr_order = int(textEditOrderDistr.value)
             if distr_order >= 0:
                 n.send(pickle.dumps(ProcessData("distr_order", [0], distr_order)))
+                n.send(pickle.dumps(ProcessData("upd_distr_inventorycosts", [0], inventorycosts)))
+                n.send(pickle.dumps(ProcessData("upd_distr_backlogcosts", [0], backlogcosts)))
+                n.send(pickle.dumps(ProcessData("upd_distr_costs", [0], costs)))
+                n.send(pickle.dumps(ProcessData("upd_distr_lastperiod", [0], current_period)))
+                n.send(pickle.dumps(ProcessData("upd_distr_backlogtotal", [0], backlogtotal)))
+                n.send(pickle.dumps(ProcessData("upd_distr_inventory", [0], inventory)))
                 sheet_distr.write(int(current_period), 2, int(distr_order))
                 wb.save(f'distr_stat{textEditPortDistr.value}_{xtime}.xls')
                 button_distr_order.bgcolor = DISABLED_COLOR
@@ -255,34 +274,34 @@ def main(page: ft.Page):
     label_distr_port = ft.Text(value="Port:", text_align=ft.TextAlign.LEFT, size=12)
     label_distr_info = ft.Text(value="Info", text_align=ft.TextAlign.LEFT, size=12)
     textEditOrderDistr = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                         height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                         height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditShipmentDistr = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                         height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                         height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditPassDistr = ft.TextField(value="passphrase", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditServerDistr = ft.TextField(value="localhost", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                     height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                     height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditPortDistr = ft.TextField(value="5556", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     button_distr_order = ft.ElevatedButton("Order", on_click=on_button_distr_order_pressed,
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                              side=ft.BorderSide(1, ft.colors.GREY)),
+                                                              side=ft.BorderSide(1, ft.Colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
     button_distr_shipment = ft.ElevatedButton("Shipment", on_click=on_button_distr_shipment_pressed,
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                              side=ft.BorderSide(1, ft.colors.GREY)),
+                                                              side=ft.BorderSide(1, ft.Colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
     #button_distr_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_distr_disconnect_pressed,
     #                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-    #                                                               side=ft.BorderSide(1, ft.colors.GREY)),
+    #                                                               side=ft.BorderSide(1, ft.Colors.GREY)),
     #                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_distr_update = ft.ElevatedButton("Update", on_click=on_button_distr_update_pressed,
                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                               side=ft.BorderSide(1, ft.colors.GREY)),
+                                                               side=ft.BorderSide(1, ft.Colors.GREY)),
                                           bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_distr_connect = ft.ElevatedButton("Connect", on_click=on_button_distr_connect_pressed,
                                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                                side=ft.BorderSide(1, ft.colors.GREY)),
+                                                                side=ft.BorderSide(1, ft.Colors.GREY)),
                                            bgcolor=ENABLED_COLOR, color="#ffffff")
     #page.overlay.append(button_distr_disconnect)
     page.overlay.append(button_distr_update)

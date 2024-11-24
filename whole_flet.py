@@ -57,8 +57,8 @@ def main(page: ft.Page):
     pg = page
     pg.title = "Wholesaler"
     pg.bgcolor = "#e6e6e6"
-    pg.window_width = 800
-    pg.window_height = 600
+    pg.window.width = 800
+    pg.window.height = 600
     pg.expand = True
     pg.scroll = "ALWAYS"
 
@@ -73,6 +73,12 @@ def main(page: ft.Page):
 
     def on_button_whole_connect_pressed(e):
         global n
+        global current_period
+        global inventorycosts
+        global backlogcosts
+        global backlogtotal
+        global costs
+        global inventory
         password = textEditPassWhole.value
         server = textEditServerWhole.value
         port = int(textEditPortWhole.value)
@@ -90,6 +96,13 @@ def main(page: ft.Page):
                 label_whole_info.value = f"Wholesaler connected to: {server}_{port}"
                 label_whole_info.visible = True
                 label_whole_info.update()
+                current_period = n.send(pickle.dumps(ProcessData("get_whole_lastperiod", [0], current_period)))
+                inventorycosts = n.send(pickle.dumps(ProcessData("get_whole_inventorycosts", [0], 0)))
+                backlogcosts = n.send(pickle.dumps(ProcessData("get_whole_backlogcosts", [0], 0)))
+                backlogtotal = n.send(pickle.dumps(ProcessData("get_whole_backlogtotal", [0], 0)))
+                costs = n.send(pickle.dumps(ProcessData("get_whole_costs", [0], 0)))
+                if current_period > 0:
+                    inventory = n.send(pickle.dumps(ProcessData("get_whole_inventory", [0], 0)))
             except:
                 run = False
             button_whole_connect.bgcolor = DISABLED_COLOR
@@ -213,6 +226,12 @@ def main(page: ft.Page):
             whole_order = int(textEditOrderWhole.value)
             if whole_order >= 0:
                 n.send(pickle.dumps(ProcessData("whole_order", [0], whole_order)))
+                n.send(pickle.dumps(ProcessData("upd_whole_inventorycosts", [0], inventorycosts)))
+                n.send(pickle.dumps(ProcessData("upd_whole_backlogcosts", [0], backlogcosts)))
+                n.send(pickle.dumps(ProcessData("upd_whole_costs", [0], costs)))
+                n.send(pickle.dumps(ProcessData("upd_whole_lastperiod", [0], current_period)))
+                n.send(pickle.dumps(ProcessData("upd_whole_backlogtotal", [0], backlogtotal)))
+                n.send(pickle.dumps(ProcessData("upd_whole_inventory", [0], inventory)))
                 sheet_whole.write(int(current_period), 2, int(whole_order))
                 wb.save(f'whole_stat{textEditPortWhole.value}_{xtime}.xls')
                 button_whole_order.bgcolor = DISABLED_COLOR
@@ -254,22 +273,22 @@ def main(page: ft.Page):
     label_whole_port = ft.Text(value="Port:", text_align=ft.TextAlign.LEFT, size=12)
     label_whole_info = ft.Text(value="Info", text_align=ft.TextAlign.LEFT, size=12)
     textEditOrderWhole = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                         height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                         height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditShipmentWhole = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                         height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                         height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditPassWhole = ft.TextField(value="passphrase", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditServerWhole = ft.TextField(value="localhost", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                     height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                     height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditPortWhole = ft.TextField(value="5556", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     button_whole_order = ft.ElevatedButton("Order", on_click=on_button_whole_order_pressed,
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                              side=ft.BorderSide(1, ft.colors.GREY)),
+                                                              side=ft.BorderSide(1, ft.Colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
     button_whole_shipment = ft.ElevatedButton("Shipment", on_click=on_button_whole_shipment_pressed,
                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                              side=ft.BorderSide(1, ft.colors.GREY)),
+                                                              side=ft.BorderSide(1, ft.Colors.GREY)),
                                          bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
     #button_whole_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_whole_disconnect_pressed,
     #                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
@@ -277,11 +296,11 @@ def main(page: ft.Page):
     #                                          bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_whole_update = ft.ElevatedButton("Update", on_click=on_button_whole_update_pressed,
                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                               side=ft.BorderSide(1, ft.colors.GREY)),
+                                                               side=ft.BorderSide(1, ft.Colors.GREY)),
                                           bgcolor=DISABLED_COLOR, color="#ffffff", right=10, top=10, disabled=True)
     button_whole_connect = ft.ElevatedButton("Connect", on_click=on_button_whole_connect_pressed,
                                            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5),
-                                                                side=ft.BorderSide(1, ft.colors.GREY)),
+                                                                side=ft.BorderSide(1, ft.Colors.GREY)),
                                            bgcolor=ENABLED_COLOR, color="#ffffff")
     #page.overlay.append(button_whole_disconnect)
     page.overlay.append(button_whole_update)

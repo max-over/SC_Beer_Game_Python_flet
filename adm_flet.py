@@ -29,8 +29,8 @@ def main(page: ft.Page):
     pg = page
     pg.title = "Administrator"
     pg.bgcolor = "#e6e6e6"
-    pg.window_width = 800
-    pg.window_height = 600
+    pg.window.width = 800
+    pg.window.height = 600
     pg.expand = True
     pg.scroll = "ALWAYS"
 
@@ -65,13 +65,10 @@ def main(page: ft.Page):
             button_adm_connect.update()
             button_adm_connect.disabled = True
             button_adm_connect.update()
-           # button_adm_disconnect.disabled = False
-           # button_adm_disconnect.update()
-           # button_adm_disconnect.bgcolor = ENABLED_COLOR
-           # button_adm_disconnect.update()
-            button_adm_setperiod.disabled = False
-            button_adm_setperiod.update()
+
             button_adm_setperiod.bgcolor = ENABLED_COLOR
+            button_adm_setperiod.update()
+            button_adm_setperiod.disabled = False
             button_adm_setperiod.update()
             textEditPassAdm.value = ""
             textEditPassAdm.update()            
@@ -119,26 +116,26 @@ def main(page: ft.Page):
     label_adm_port = ft.Text(value="Port:", text_align=ft.TextAlign.LEFT, size=12)
     label_adm_info = ft.Text(value="Info", text_align=ft.TextAlign.LEFT, size=12)
     textEditSetPeriod = ft.TextField(value="1", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75, height=40,
-                                     text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                     text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditSetCustDemand = ft.TextField(value="5", bgcolor="#ffffff", text_align=ft.TextAlign.RIGHT, width=75,
-                                         height=40, text_size=20, content_padding=5, border_color=ft.colors.GREY)
+                                         height=40, text_size=20, content_padding=5, border_color=ft.Colors.GREY)
     textEditPassAdm = ft.TextField(value="passphrase", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditServerAdm = ft.TextField(value="localhost", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                     height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                     height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     textEditPortAdm = ft.TextField(value="5556", bgcolor="#ffffff", text_align=ft.TextAlign.CENTER, width=75,
-                                   height=40, text_size=12, content_padding=5, border_color=ft.colors.GREY)
+                                   height=40, text_size=12, content_padding=5, border_color=ft.Colors.GREY)
     button_adm_setperiod = ft.ElevatedButton("Set period and demand", on_click=on_button_adm_set_period_pressed,
-                                              style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
+                                              style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.Colors.GREY)),
                                               bgcolor=DISABLED_COLOR, color="#ffffff", disabled=True)
     #button_adm_disconnect = ft.ElevatedButton("Disconnect", on_click=on_button_adm_disconnect_pressed,
     #                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
     #                                           bgcolor=DISABLED_COLOR, color="#ffffff",  right=10, top=10, disabled=True)
     button_adm_update = ft.ElevatedButton("Update all", on_click=on_button_adm_update_pressed, 
-                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
+                                          style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.Colors.GREY)),
                                           bgcolor=DISABLED_COLOR, color="#ffffff",  right=10, top=10, disabled=True)
     button_adm_connect = ft.ElevatedButton("Connect", on_click=on_button_adm_connect_pressed,
-                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.colors.GREY)),
+                                           style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5), side=ft.BorderSide(1, ft.Colors.GREY)),
                                            bgcolor=ENABLED_COLOR, color="#ffffff")
     #page.overlay.append(button_adm_disconnect)
     page.overlay.append(button_adm_update)
